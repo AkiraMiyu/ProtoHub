@@ -17,7 +17,7 @@ Duration = 39;
 wait(2.0)
 
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-local Window = Library.CreateLib("ProtoHub                                               By: 隼人明 | AkiraHayato", "DarkTheme")
+local Window = Library.CreateLib("ProtoHub V2                                             By: 隼人明 | AkiraHayato", "Sentinel")
 
 -- MAIN
 local Main = Window:NewTab("Main Menu")
@@ -25,7 +25,11 @@ local MainSection = Main:NewSection("Hubs")
 
 
 MainSection:NewButton("SofieMiyu Hub", "Cute hub made by: SofieMiyu", function()
-    loadstring(game:HttpGet("https://pastebin.com/raw/jMTzBG5f"))();
+    loadstring(game:HttpGet("https://pastebin.com/raw/b2HPP1gq"))();
+end)
+
+MainSection:NewButton("InfiniteYield", "Made for Furries >:3", function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
 end)
 
 MainSection:NewButton("Rose Hub", "Awesome 2018 Hub working very well", function()
@@ -368,27 +372,24 @@ end)
 
 -- PLAYER
 local Player = Window:NewTab("Player")
-local PlayerSection = Player:NewSection("Be Powerful")
+local PlayerSection = Player:NewSection("PlayerControls")
 
-PlayerSection:NewToggle("SuperSpeed", "you are fast", function(state)
-    if state then
-        player = game.Players.LocalPlayer
-        player.Character.Humanoid.WalkSpeed = 120
-    else
-        player = game.Players.LocalPlayer
-        player.Character.Humanoid.WalkSpeed = 16
-    end
+PlayerSection:NewSlider("SpeedControl", "Change Your Speed", 500, 0, function(s) -- 500 (MaxValue) | 0 (MinValue)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
 end)
 
-PlayerSection:NewToggle("SuperJump", "you jump high", function(state)
-    if state then
-        game.Players.LocalPlayer.Character.Humanoid.JumpPower = 150
-    else
-        game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
-    end
+PlayerSection:NewSlider("JumpControl", "Change Your JumpPower", 500, 0, function(s) -- 500 (MaxValue) | 0 (MinValue)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = s
 end)
 
-PlayerSection:NewButton("Wall Walk", "Fe Wall Walk this can be unstable take care", function()
+PlayerSection:NewButton("Back to Default", "Set User Jump and Speed to Default", function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+end)
+
+local MiscSection = Player:NewSection("Misc Scripts")
+
+MiscSection:NewButton("Wall Walk", "Fe Wall Walk this can be unstable take care", function()
     --BROUGHT TO YOU BY RSCRIPTS.NET!--
 
 
@@ -11952,7 +11953,7 @@ repeat wait()
     print("end")
 end)
 
-PlayerSection:NewButton("More Powers", "POWER!", function()
+MiscSection:NewButton("More Powers", "POWER!", function()
 
 
     local ToggleGuis = true
