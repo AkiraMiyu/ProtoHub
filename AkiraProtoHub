@@ -15,25 +15,31 @@ game:GetService("StarterGui"):SetCore("SendNotification", {
 Duration = 39;
 
 wait(2.0)
-
+local colors = {
+    SchemeColor = Color3.fromRGB(10,84,0),
+    Background = Color3.fromRGB(0, 0, 0),
+    Header = Color3.fromRGB(0, 0, 0),
+    TextColor = Color3.fromRGB(30,255,0),
+    ElementColor = Color3.fromRGB(20, 20, 20)
+}
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-local Window = Library.CreateLib("ProtoHub V2                                             By: 隼人明 | AkiraHayato", "Sentinel")
+local Window = Library.CreateLib("ProtoHub V3                                             By: 隼人明 | AkiraHayato", colors)
 
 -- MAIN
 local Main = Window:NewTab("Main Menu")
 local MainSection = Main:NewSection("Hubs")
 
 
-MainSection:NewButton("SofieMiyu Hub", "Cute hub made by: SofieMiyu", function()
-    loadstring(game:HttpGet("https://pastebin.com/raw/b2HPP1gq"))();
+MainSection:NewButton("VHub", "OPHub Take Care", function()
+    loadstring(game:HttpGet(('https://raw.githubusercontent.com/Veincx5315/Created/VHub/Simple'),true))()
 end)
 
 MainSection:NewButton("InfiniteYield", "Made for Furries >:3", function()
     loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
 end)
 
-MainSection:NewButton("Rose Hub", "Awesome 2018 Hub working very well", function()
-    loadstring(game:HttpGet("https://pastebin.com/raw/P1DFivCJ"))();
+MainSection:NewButton("Universal FE", "Fe Script Hub", function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/Dvrknvss/UniversalFEScriptHub/main/Script'))()
 end)
 
 MainSection:NewButton("HoHo Hub(BloxFruit)", "Amazing Hub For Farming and make a lot of cool stuff On BloxFruit", function()
@@ -259,48 +265,27 @@ Notif("Finished at loading the script")
 
 end)
 
-FunSection:NewButton("SpyChat", "Powerful SpyChat Made By: SofieMiyu", function()
+FunSection:NewButton("SpyChat", "Powerful SpyChat", function()
 
-    game:GetService("StarterGui"):SetCore("SendNotification", { 
-        Title = "SofieMiyu Scripts";
-        Text = "Please Wait :3";
-        Icon = "rbxthumb://type=Asset&id=11753121769&w=150&h=150"})
-    Duration = 2;
-
-wait(6.0)
-
-game:GetService("StarterGui"):SetCore("SendNotification", { 
-        Title = "Loaded";
-        Text = "Enjoy :3";
-        Icon = "rbxthumb://type=Asset&id=0&w=150&h=150"})
-    Duration = 5;
-
-
-local ChatSettings = require(game.Chat:WaitForChild('ClientChatModules').ChatSettings)
-
-ChatSettings.WindowResizable = true;
-ChatSettings.DefaultFont = Enum.Font.GothamBlack ; --Any Font you want
-ChatSettings.ChatBarFont = Enum.Font.GothamBlack ; --The Font you typed at the top
-
---This script reveals ALL hidden messages in the default chat
---chat "/spy" to toggle!
+    --This script reveals ALL hidden messages in the default chat
+--chat "/MagmaHacks" to toggle!
 enabled = true
 --if true will check your messages too
-spyOnMyself = true
+spyOnMyself = false
 --if true will chat the logs publicly (fun, risky)
 public = false
 --if true will use /me to stand out
 publicItalics = true
 --customize private logs
 privateProperties = {
-	Color = Color3.fromRGB(192, 192, 192); 
-	Font = Enum.Font.SourceSansSemibold;
+	Color = Color3.fromRGB(0,255,255); 
+	Font = Enum.Font.SourceSansBold;
 	TextSize = 18;
 }
 --////////////////////////////////////////////////////////////////
 local StarterGui = game:GetService("StarterGui")
 local Players = game:GetService("Players")
-local player = Players.LocalPlayer
+local player = Players.LocalPlayer or Players:GetPropertyChangedSignal("LocalPlayer"):Wait() or Players.LocalPlayer
 local saymsg = game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("SayMessageRequest")
 local getmsg = game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("OnMessageDoneFiltering")
 local instance = (_G.chatSpyInstance or 0) + 1
@@ -308,10 +293,10 @@ _G.chatSpyInstance = instance
 
 local function onChatted(p,msg)
 	if _G.chatSpyInstance == instance then
-		if p==player and msg:lower():sub(1,4)=="/spy" then
+		if p==player and msg:lower():sub(1,4)=="/MagmaHacks" then
 			enabled = not enabled
 			wait(0.3)
-			privateProperties.Text = "Spy"
+			privateProperties.Text = "{SPY "..(enabled and "EN" or "DIS").."ABLED}"
 			StarterGui:SetCore("ChatMakeSystemMessage",privateProperties)
 		elseif enabled and (spyOnMyself==true or p~=player) then
 			msg = msg:gsub("[\n\r]",''):gsub("\t",' '):gsub("[ ]+",' ')
@@ -325,9 +310,9 @@ local function onChatted(p,msg)
 			conn:Disconnect()
 			if hidden and enabled then
 				if public then
-					saymsg:FireServer((publicItalics and "/me " or '').."> [".. p.Name .."]: "..msg,"All")
+					saymsg:FireServer((publicItalics and "/me " or '').."{SPY} [".. p.Name .."]: "..msg,"All")
 				else
-					privateProperties.Text = "Spy [".. p.Name .."]: "..msg
+					privateProperties.Text = "{SPY} [".. p.Name .."]: "..msg
 					StarterGui:SetCore("ChatMakeSystemMessage",privateProperties)
 				end
 			end
@@ -341,8 +326,9 @@ end
 Players.PlayerAdded:Connect(function(p)
 	p.Chatted:Connect(function(msg) onChatted(p,msg) end)
 end)
-privateProperties.Text = "[Spy Chat Loaded]"
+privateProperties.Text = "{SPY "..(enabled and "EN" or "DIS").."ABLED}"
 StarterGui:SetCore("ChatMakeSystemMessage",privateProperties)
+if not player.PlayerGui:FindFirstChild("Chat") then wait(3) end
 local chatFrame = player.PlayerGui.Chat.Frame
 chatFrame.ChatChannelParentFrame.Visible = true
 chatFrame.ChatBarParentFrame.Position = chatFrame.ChatChannelParentFrame.Position+UDim2.new(UDim.new(),chatFrame.ChatChannelParentFrame.Size.Y)
@@ -12979,4 +12965,25 @@ MiscSection:NewButton("More Powers", "POWER!", function()
     game.RunService.Heartbeat:Connect(Toggling)
     
     
+end)
+
+-- ToggleKeys
+local ToggleKeys = Window:NewTab("Keyboard")
+local KeybindsSection = ToggleKeys:NewSection("Keybinds")
+
+KeybindsSection:NewKeybind("ToggleUI", "Hides the Menu", Enum.KeyCode.RightControl, function()
+	Library:ToggleUI()
+end)
+
+KeybindsSection:NewKeybind("SetSpeed", "Extreme Speed!", Enum.KeyCode.Q, function()
+	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 150
+end)
+
+KeybindsSection:NewKeybind("SetJump", "Extreme Jump!", Enum.KeyCode.Q, function()
+	game.Players.LocalPlayer.Character.Humanoid.JumpPower = 150
+end)
+
+KeybindsSection:NewKeybind("DisableAll", "Speed And Jump Default!", Enum.KeyCode.E, function()
+	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
 end)
